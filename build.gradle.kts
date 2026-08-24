@@ -3,7 +3,7 @@ plugins {
 }
 
 group = "com.example"
-version = "1.1.0"
+version = "1.2.0"
 
 repositories {
     mavenCentral()
@@ -11,18 +11,20 @@ repositories {
 }
 
 dependencies {
-    // 编译时使用最新 1.21.11 API，运行时兼容更低版本（纯 Bukkit/Paper API）
+    // 编译使用较新 API，运行时靠反射/兼容层尽量覆盖多版本
+    // 26.2 需要 Java 25；这里仍用 1.21.11 编译以兼容更多构建环境
     compileOnly("io.papermc.paper:paper-api:1.21.11-R0.1-SNAPSHOT")
 }
 
 java {
-    toolchain.languageVersion.set(JavaLanguageVersion.of(21))
+    // 1.16.5~1.21.11 常用 Java 17/21；26.x 需要 Java 25
+    // 编译目标设为 17，可在更多环境运行（26.x 服务器需自行用 Java 25 运行）
+    toolchain.languageVersion.set(JavaLanguageVersion.of(17))
 }
 
 tasks.withType<JavaCompile> {
     options.encoding = "UTF-8"
-    // 保持字节码兼容 Java 21
-    options.release.set(21)
+    options.release.set(17)
 }
 
 tasks.processResources {

@@ -1,9 +1,10 @@
 name: PigGod
 version: '${version}'
 main: com.example.piggod.PigGodPlugin
-api-version: '1.20'
+# api-version 设为 1.13 可在较广范围加载；过低的 1.12 服务器仍可能不支持现代 API
+api-version: '1.13'
 author: acc0-ga
-description: Bilibili Pig God (猪神) meme command - Multi-version support
+description: Bilibili Pig God (猪神) meme - best-effort multi-version
 
 commands:
   piggod:
