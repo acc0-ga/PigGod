@@ -1,0 +1,18 @@
+name: PigGod
+version: '${project.version}'
+main: com.example.piggod.PigGodPlugin
+api-version: '1.21'
+author: acc0-ga
+description: Bilibili Pig God (猪神) meme command
+
+commands:
+  piggod:
+    description: 召唤猪神 / 猪神来电
+    usage: /piggod
+    permission: piggod.use
+    aliases: [猪神, pgod]
+
+permissions:
+  piggod.use:
+    description: 允许使用 /piggod 指令
+    default: true
