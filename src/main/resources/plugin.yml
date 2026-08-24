@@ -1,5 +1,5 @@
 name: PigGod
-version: '${project.version}'
+version: '${version}'
 main: com.example.piggod.PigGodPlugin
 api-version: '1.21'
 author: acc0-ga
