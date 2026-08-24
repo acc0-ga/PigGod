@@ -3,28 +3,31 @@ plugins {
 }
 
 group = "com.example"
-version = "1.2.0"
+version = "1.3.0"
 
 repositories {
     mavenCentral()
     maven("https://repo.papermc.io/repository/maven-public/")
+    // 1.12 时代 Spigot API（仅作参考，实际尽量不依赖新方法）
+    maven("https://hub.spigotmc.org/nexus/content/repositories/snapshots/")
 }
 
 dependencies {
-    // 编译使用较新 API，运行时靠反射/兼容层尽量覆盖多版本
-    // 26.2 需要 Java 25；这里仍用 1.21.11 编译以兼容更多构建环境
+    // 仍用较新 API 编译（provided），运行时全部走反射/旧 API 兼容
     compileOnly("io.papermc.paper:paper-api:1.21.11-R0.1-SNAPSHOT")
 }
 
 java {
-    // 1.16.5~1.21.11 常用 Java 17/21；26.x 需要 Java 25
-    // 编译目标设为 17，可在更多环境运行（26.x 服务器需自行用 Java 25 运行）
-    toolchain.languageVersion.set(JavaLanguageVersion.of(17))
+    // 关键：目标字节码 Java 8，才能在 1.12 服务器（常为 Java 8）上加载
+    sourceCompatibility = JavaVersion.VERSION_1_8
+    targetCompatibility = JavaVersion.VERSION_1_8
 }
 
 tasks.withType<JavaCompile> {
     options.encoding = "UTF-8"
-    options.release.set(17)
+    // 强制 Java 8 字节码（不使用 --release 17）
+    sourceCompatibility = "1.8"
+    targetCompatibility = "1.8"
 }
 
 tasks.processResources {

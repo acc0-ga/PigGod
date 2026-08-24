@@ -1,19 +1,18 @@
 name: PigGod
 version: '${version}'
 main: com.example.piggod.PigGodPlugin
-# api-version 设为 1.13 可在较广范围加载；过低的 1.12 服务器仍可能不支持现代 API
-api-version: '1.13'
 author: acc0-ga
-description: Bilibili Pig God (猪神) meme - best-effort multi-version
+description: Bilibili Pig God meme - hard compat 1.12 ~ 26.x
+# 不写 api-version，便于 1.12 加载；1.13+ 服务器也能识别
 
 commands:
   piggod:
-    description: 召唤猪神 / 猪神来电
+    description: Summon Pig God
     usage: /piggod
     permission: piggod.use
     aliases: [猪神, pgod]
 
 permissions:
   piggod.use:
-    description: 允许使用 /piggod 指令
+    description: Allow /piggod
     default: true
