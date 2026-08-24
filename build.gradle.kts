@@ -7,24 +7,25 @@ version = "1.3.0"
 
 repositories {
     mavenCentral()
-    maven("https://hub.spigotmc.org/nexus/content/repositories/snapshots/")
-    maven("https://oss.sonatype.org/content/repositories/snapshots/")
+    maven("https://repo.papermc.io/repository/maven-public/")
 }
 
 dependencies {
-    // 用 1.12.2 API 编译，保证 Java 8 可解析依赖，运行时靠反射兼容更高版本
-    compileOnly("org.spigotmc:spigot-api:1.12.2-R0.1-SNAPSHOT")
+    // 编译用较新 API；运行时反射兼容旧服
+    compileOnly("io.papermc.paper:paper-api:1.21.11-R0.1-SNAPSHOT")
 }
 
 java {
-    sourceCompatibility = JavaVersion.VERSION_1_8
-    targetCompatibility = JavaVersion.VERSION_1_8
+    // 用 JDK 21 解析/编译（Paper API 需要）
+    toolchain {
+        languageVersion.set(JavaLanguageVersion.of(21))
+    }
 }
 
 tasks.withType<JavaCompile> {
     options.encoding = "UTF-8"
-    sourceCompatibility = "1.8"
-    targetCompatibility = "1.8"
+    // 输出 Java 8 字节码，便于 1.12 服务器（Java 8）加载
+    options.release.set(8)
 }
 
 tasks.processResources {
